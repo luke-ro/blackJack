@@ -13,3 +13,7 @@ class Player:
 
     def changeMoney(self,amount):
         self.money+=amount
+
+    def showHand(self):
+        for i in self.hand:
+            print(i.getName()+" "),
