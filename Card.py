@@ -6,16 +6,55 @@ class Card:
 
         # returns the name of the card
     def getName(self):
-        if self.idNum < 14 & self.idNum > 0:
-            return string(self.idNum + " of Hearts")
-        elif self.idnNum <27:
-            return string(self.idNum + " of Diamond")
-        elif self.idnNum <40:
-            return string(self.idNum + " of Clubs")
-        elif self.idnNum <53:
-            return string(self.idNum + " of Spades")
+        if self.idNum < 14 and self.idNum > 0:
+            if self.idNum % 13 == 1:
+                return "Ace of Hearts"
+            elif self.idNum % 13 == 11:
+                return "Jack of Hearts"
+            elif self.idNum % 13 == 12:
+                return "Queen of Hearts"
+            elif self.idNum % 13 == 0:
+                return "King of Hearts"
+            else:
+                return str(self.idNum) + " of Hearts"
+
+        elif self.idNum <27:
+            if self.idNum % 13 == 1:
+                return "Ace of Diamonds"
+            elif self.idNum % 13 == 11:
+                return "Jack of Diamonds"
+            elif self.idNum % 13 == 12:
+                return "Queen of Diamonds"
+            elif self.idNum % 13 == 0:
+                return "King of Diamonds"
+            else:
+                return str(self.idNum % 13) + " of Diamonds"
+
+        elif self.idNum <40:
+            if self.idNum % 13 == 1:
+                return "Ace of Clubs"
+            elif self.idNum % 13 == 11:
+                return "Jack of Clubs"
+            elif self.idNum % 13 == 12:
+                return "Queen of Clubs"
+            elif self.idNum % 13 == 0:
+                return "King of Clubs"
+            else:
+                return str(self.idNum % 13) + " of Clubs"
+
+        elif self.idNum <53:
+            if self.idNum % 13 == 1:
+                return "Ace of Spades"
+            elif self.idNum % 13 == 11:
+                return "Jack of Spades"
+            elif self.idNum % 13 == 12:
+                return "Queen of Spades"
+            elif self.idNum % 13 == 0:
+                return "King of Spades"
+            else:
+                return str(self.idNum % 13) + " of Spades"
         else:
-            return string("Not a valid card")
+            return "Not a valid card"
 
         # returs the number of the card
     def getNum(self):
