@@ -1,5 +1,6 @@
 class Card:
 
+
     def __init__(self, idNum):
         self.idNum = idNum
         self.faceDown = True;
