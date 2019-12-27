@@ -60,14 +60,17 @@ class Card:
     def getNum(self):
         return self.idNum
 
+    def getOrientation(self):
+        return self.faceDown
+
         # "flips" the card
     def flip(self):
         self.faceDown = self.faceDown != self.faceDown;
 
         # turns the card face up
     def flipUp(self):
-        self.faceDown = 0
+        self.faceDown = False
 
         # turns the card face down
     def flipDown(self):
-        self.faceDown = 1
+        self.faceDown = True
