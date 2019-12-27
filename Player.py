@@ -6,7 +6,10 @@ class Player:
     def __init__(self, number, money):
         self.number = number
         self.money = money
-        self.cards = []
+        self.hand = []
 
-    def deal(self, card)
-        self.cards.append(card)
+    def takeCard(self, card):
+        self.hand.append(card)
+
+    def changeMoney(self,amount):
+        self.money+=amount
