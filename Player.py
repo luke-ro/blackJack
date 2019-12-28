@@ -2,7 +2,6 @@ import Card
 
 class Player:
 
-
     def __init__(self, number, money):
         self.number = number
         self.money = money
@@ -16,4 +15,9 @@ class Player:
 
     def showHand(self):
         for i in self.hand:
-            print(i.getName()+" "),
+            print(i.getName() + " ")
+
+    def showFaceUpCard(self):
+        for i in self.hand:
+            if i.getOrientation() == False:
+                print(i.getName() + " ")
