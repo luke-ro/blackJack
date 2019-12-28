@@ -29,6 +29,7 @@ def rand(arg):
     return random()
 
 class Deck(object):
+    
     def __init__(self):
         self.myDeck=[None]*52
 

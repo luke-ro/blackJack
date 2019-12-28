@@ -6,6 +6,7 @@ class Card:
 
         # returns the name of the card
     def getName(self):
+        """Returns the name of the card as a string"""
         if self.idNum < 14 and self.idNum > 0:
             if self.idNum % 13 == 1:
                 return "Ace of Hearts"
@@ -56,21 +57,23 @@ class Card:
         else:
             return "Not a valid card"
 
-        # returs the number of the card
     def getNum(self):
+        """returs the number of the card"""
         return self.idNum
 
     def getOrientation(self):
+        """Returns True if the card is facedown"""
         return self.faceDown
 
-        # "flips" the card
     def flip(self):
+        """flips the card"""
         self.faceDown = self.faceDown != self.faceDown;
 
-        # turns the card face up
     def flipUp(self):
+        """turns the card face up"""
         self.faceDown = False
 
-        # turns the card face down
+
     def flipDown(self):
+        """turns the card face down"""
         self.faceDown = True
