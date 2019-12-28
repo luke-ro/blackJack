@@ -29,7 +29,7 @@ def rand(arg):
     return random()
 
 class Deck(object):
-    
+
     def __init__(self):
         self.myDeck=[None]*52
 
@@ -51,10 +51,13 @@ class Deck(object):
             self.randomDeck[count]=self.myDeck[randEle]"""
 
     def getDeck(self):
-        self.cardNames=[i.getName() for i in dck.myDeck]
+        self.cardNames=[i.getName() for i in self.myDeck]
         # print("\n"*4)
         # print(self.cardNames)
         return(self.cardNames)
+
+    def getSize(self):
+        return len(self.myDeck)
 
     def __removeCard(self):
         return self.myDeck.pop(0)

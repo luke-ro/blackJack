@@ -1,3 +1,9 @@
+from random import seed
+from random import random
+from time import clock
+
+seed(clock)
+
 class Player:
 
     def __init__(self, number, name, money):
@@ -42,10 +48,26 @@ class Player:
 
         return total
 
-# class NPCPlayer(Player):
+class NPCPlayer(Player):
 
-    # def makeBet(self, pot, roundNum):
-    #     handValue = self.getHandValue()
-    #     if handValue[0] > 21 or handValue[1] > 21:
-    #         return 0
-    #     elif
+    def __init__(self, number, name, money, risk=None):
+        self.number = number
+        self.name   = name
+        self.money  = money
+        self.hand   = []
+
+        if risk is None:
+            self.risk = gauss(0.5,0.3);
+        else
+            self.risk = risk
+
+    def hitMe(self, pot, roundNum):
+        handValue = self.getHandValue()
+
+        if handValue[0] > 21 or handValue[1] > 21:
+            return False
+        elif handValue[0] == handValue[1]: # no Aces
+            if handValue < 11:
+                return True
+            elif handValue < 13+2*risk+(2*(random()-.5)):
+                if random()*self.risk 

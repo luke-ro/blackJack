@@ -73,7 +73,6 @@ class Card:
         """turns the card face up"""
         self.faceDown = False
 
-
     def flipDown(self):
         """turns the card face down"""
         self.faceDown = True
