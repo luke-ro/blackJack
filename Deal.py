@@ -42,18 +42,9 @@ class Deck(object):
 
     def shuffle(self):
         self.myDeck.sort(key=rand)
-        """randOrder=[i for i in range(52)]
-        randOrder.sort(key=rand)
-        self.randomDeck=[None]*52
-
-        for count, randEle in enumerate(randOrder):
-
-            self.randomDeck[count]=self.myDeck[randEle]"""
 
     def getDeck(self):
-        self.cardNames=[i.getName() for i in dck.myDeck]
-        # print("\n"*4)
-        # print(self.cardNames)
+        self.cardNames=[i.getName() for i in dck.myDeck]  
         return(self.cardNames)
 
     def __removeCard(self):
