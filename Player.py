@@ -1,16 +1,21 @@
 from random import seed
 from random import random
+from random import gauss
 from time import clock
 
 seed(clock)
 
 class Player:
 
+    instances = []
+
     def __init__(self, number, name, money):
         self.number = number
         self.name   = name
         self.money  = money
         self.hand   = []
+        Player.bet  = 0
+        Player.instances.append(self.name)
 
     def takeCard(self, card):
         self.hand.append(card)
@@ -19,8 +24,11 @@ class Player:
         self.money+=amount
 
     def showHand(self):
+        print("-----------------")
+        print(self.name + " has ", end="", flush=True)
         for i in self.hand:
-            print(i.getName() + " ")
+            print(i.getName() + " ", end="", flush=True)
+        print()
 
     def showFaceUpCard(self):
         for i in self.hand:
@@ -48,16 +56,27 @@ class Player:
 
         return total
 
+    def getNames(self):
+        return instances
+
+    def makeBet(self, amount):
+        self.money =- amount
+        self.bet   =+ amount
+
+    def resetBet(self):
+        self.bet = 0
+
 class Dealer(Player):
 
     def __init__(self, risk=None):
         self.hand   = []
+        self.name = "Dealer"
         if risk is None:
-            self.risk = gauss(0.5,0.3);
-        else
+            self.risk = gauss(0,0.5);
+        else:
             self.risk = risk
 
-    def hitMe(self, pot, roundNum):
+    def hitMe(self):
         handValue = self.getHandValue()
 
         if handValue[0] > 21 or handValue[1] > 21:
@@ -66,3 +85,10 @@ class Dealer(Player):
             if handValue < 11:
                 return True
             elif handValue < 13+2*risk+(2*(random()-.5)):
+                return True
+            elif handValue < 15+2*risk+(2*(random()-.5)):
+                return True
+            elif handValue < 17+2*risk+(2*(random()-.5)):
+                return True
+            else:
+                return False

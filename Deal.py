@@ -58,6 +58,9 @@ class Deck(object):
     def dealCard(self, player):
         player.takeCard(self.__removeCard())
 
+    def dealCardFaceUp(self, player):
+        player.takeCard(self.__removeCard().flipUp())
+
 # dck=Deck()
 # print("\n"*4)
 # print(dck.myDeck)

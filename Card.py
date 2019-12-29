@@ -65,9 +65,9 @@ class Card:
         """Returns True if the card is facedown"""
         return self.faceDown
 
-    def flip(self):
-        """flips the card"""
-        self.faceDown = self.faceDown != self.faceDown;
+    # def flip(self):
+    #     """flips the card"""
+    #     self.faceDown = self.faceDown != self.faceDown;
 
     def flipUp(self):
         """turns the card face up"""

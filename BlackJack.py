@@ -7,14 +7,36 @@ import Deal
 class BlackJack(object):
 
     def __init__(game):
-        game.deck     = deck
+        game.deck     = Deal.Deck()
         game.players  = []
-        game.pot      = 0;
         game.roundNum = 0;
+        game.dealer   = Player.Dealer()
 
     def addPlayer(game, number, name, money):
-        game.players.append(Player.Player(number, name, money))
+        newPlayer = Player.Player(number, name, money);
+        game.players.append(newPlayer)
 
-    def dealCards(game)
+    def firstBets(game):
         for x in game.players:
-            game.dealCard(x)
+            bet = input("Enter Bet: ")
+            x.makeBet(bet)
+
+    def dealCards(game):
+        for x in game.players:
+            game.deck.dealCard(x)
+        for x in game.players:
+            game.deck.dealCardFaceUp(x)
+
+        game.deck.dealCard(game.dealer)
+        game.deck.dealCardFaceUp(game.dealer)
+
+    def getPlayers(game):
+        print(game.players.getNames())
+
+    def getDeckInfo(game):
+        print(game.deck.getDeck())
+        print("---------")
+        print("length of the deck is " + str(game.deck.getSize()))
+        for x in game.players:
+            x.showHand()
+        dealer.showHand()
