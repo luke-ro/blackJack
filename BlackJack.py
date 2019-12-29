@@ -10,7 +10,7 @@ class BlackJack(object):
         game.deck     = Deal.Deck()
         game.players  = []
         game.roundNum = 0;
-        game.dealer   = Player.Dealer()
+        game.dealer   = Player.DealerBJ()
 
     def addPlayer(game, number, name, money):
         newPlayer = Player.Player(number, name, money);
@@ -18,8 +18,7 @@ class BlackJack(object):
 
     def firstBets(game):
         for x in game.players:
-            bet = input("Enter Bet: ")
-            x.makeBet(bet)
+            x.makeBet()
 
     def dealCards(game):
         for x in game.players:
@@ -40,3 +39,5 @@ class BlackJack(object):
         for x in game.players:
             x.showHand()
         game.dealer.showHand()
+
+    # def playTurn(game, player):

@@ -56,17 +56,28 @@ class Player:
 
         return total
 
+    def getName(self):
+        return self.name
+
     def getNames(self):
         return instances
 
-    def makeBet(self, amount):
-        self.money =- amount
-        self.bet   =+ amount
+    def makeBet(self):
+        print(self.getName() + " has " + str(self.money))
+
+        while True:
+            amount = int(input(" Enter Bet: "))
+            if amount > self.money:
+                print("Not Enough Money. ")
+            else:
+                self.money =- amount
+                self.bet   =+ amount
+                break
 
     def resetBet(self):
         self.bet = 0
 
-class Dealer(Player):
+class DealerBJ(Player):
 
     def __init__(self, risk=None):
         self.hand   = []
