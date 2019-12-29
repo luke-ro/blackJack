@@ -25,18 +25,18 @@ class BlackJack(object):
         for x in game.players:
             game.deck.dealCard(x)
         for x in game.players:
-            game.deck.dealCardFaceUp(x)
+            game.deck.dealCard(x)
 
         game.deck.dealCard(game.dealer)
-        game.deck.dealCardFaceUp(game.dealer)
+        game.deck.dealCard(game.dealer)
 
     def getPlayers(game):
         print(game.players.getNames())
 
     def getDeckInfo(game):
         print(game.deck.getDeck())
-        print("---------")
-        print("length of the deck is " + str(game.deck.getSize()))
+        print("-----------------")
+        print("There are " + str(game.deck.getSize()) + " cards remaining in the deck")
         for x in game.players:
             x.showHand()
-        dealer.showHand()
+        game.dealer.showHand()
