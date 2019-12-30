@@ -162,6 +162,9 @@ class PlayerBJ(Player):
         self.money += self.bet*2
         self.resetBet()
 
+    def newRound(self):
+        self.isSplit = False
+
 class DealerBJ(PlayerBJ):
 
     def __init__(self):

@@ -131,7 +131,8 @@ class BlackJack(object):
     def dealerTurn(game):
         game.dealer.showHand()
         value = game.dealer.getHandValue()
-        while value[0] < 17 and value[0] == value[1]:
+        
+        while value[0] < 18:
             game.deck.dealCardFaceUp(game.dealer)
             game.dealer.showHand()
             if game.dealer.isBust():
@@ -139,7 +140,7 @@ class BlackJack(object):
                 game.dealer.bust = True
                 break
             value = game.dealer.getHandValue()
-        while value[0] < 17 and not game.dealer.bust:
+        while value[0] < 18 and not game.dealer.bust:
             game.deck.dealCardFaceUp(game.dealer)
             game.dealer.showHand()
             if game.dealer.isBust():
@@ -147,7 +148,7 @@ class BlackJack(object):
                 game.dealer.bust = True
                 break
             value = game.dealer.getHandValue()
-        while (value[1] < 17 and value[0] != 21) and not game.dealer.bust:
+        while (value[1] < 17 and value[0] > 21) and not game.dealer.bust:
             game.deck.dealCardFaceUp(game.dealer)
             game.dealer.showHand()
             if game.dealer.isBust():
@@ -155,6 +156,7 @@ class BlackJack(object):
                 game.dealer.bust = True
                 break
             value = game.dealer.getHandValue()
+
 
     def determineWinnings(game):
         value = game.dealer.getHandValue()
@@ -198,4 +200,5 @@ class BlackJack(object):
     def resetGame(game):
         for x in game.players:
             x.returnCards(game.deck)
+            x.newRound()
         game.dealer.returnCards(game.deck)
