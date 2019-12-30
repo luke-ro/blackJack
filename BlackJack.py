@@ -131,7 +131,7 @@ class BlackJack(object):
     def dealerTurn(game):
         game.dealer.showHand()
         value = game.dealer.getHandValue()
-        
+
         while value[0] < 18:
             game.deck.dealCardFaceUp(game.dealer)
             game.dealer.showHand()
@@ -173,29 +173,54 @@ class BlackJack(object):
             dealerValue = -1
 
         for x in game.players:
-            value = x.getHandValue()
-            if value[0] == value[1]:
-                if value[0] > 21:
-                    playerValue = -1 # dealer is bust
+            if len(x.secondHand) == 0:
+                value = x.getHandValue()
+                if value[0] == value[1]:
+                    if value[0] > 21:
+                        playerValue = -1 # dealer is bust
+                    else:
+                        playerValue = value[0]
+                elif value[0] < 22:
+                     playerValue = value[0]
+                elif value[1] < 22:
+                    playerValue = value[1]
                 else:
-                    playerValue = value[0]
-            elif value[0] < 22:
-                 playerValue = value[0]
-            elif value[1] < 22:
-                playerValue = value[1]
-            else:
-                playerValue = -1
+                    playerValue = -1
 
-            if playerValue != -1:
-                if playerValue == dealerValue: #wash
-                    print("wash for " + x.getName())
-                    x.wash()
-                elif playerValue > dealerValue:
-                    print("win for " + x.getName())
-                    x.twoToOne()
+                if playerValue != -1:
+                    if playerValue == dealerValue: #wash
+                        print("wash for " + x.getName())
+                        x.wash()
+                    elif playerValue > dealerValue:
+                        print("win for " + x.getName())
+                        x.twoToOne()
+                    else:
+                        print("pass for " + x.getName())
+                        pass
+            else:
+                value = x.getSecondHandValue()
+                if value[0] == value[1]:
+                    if value[0] > 21:
+                        playerValue = -1 # dealer is bust
+                    else:
+                        playerValue = value[0]
+                elif value[0] < 22:
+                     playerValue = value[0]
+                elif value[1] < 22:
+                    playerValue = value[1]
                 else:
-                    print("pass for " + x.getName())
-                    pass
+                    playerValue = -1
+
+                if playerValue != -1:
+                    if playerValue == dealerValue: #wash
+                        print("wash for " + x.getName())
+                        x.wash()
+                    elif playerValue > dealerValue:
+                        print("win for " + x.getName())
+                        x.twoToOne()
+                    else:
+                        print("pass for " + x.getName())
+                        pass
 
     def resetGame(game):
         for x in game.players:

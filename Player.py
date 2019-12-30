@@ -98,6 +98,27 @@ class PlayerBJ(Player):
 
         return total
 
+    def getSecondHandValue(self):
+        """ returns two values of the hand, one with Aces low
+                and the second with Aces high
+            - Aces = 11 or 1
+            - Face cards = 10
+            - Other cards have the value of their number
+        """
+        total = [0,0]
+        for i in self.hand:
+            if i.idNum % 13 == 1:
+                total[0] += 11
+                total[1] += 1
+            elif i.idNum % 13 in [0,11,12]:
+                total[0] += 10
+                total[1] += 10
+            else:
+                total[0] += i.idNum % 13
+                total[1] += i.idNum % 13
+
+        return total
+
     def isBust(self):
         value = self.getHandValue()
         if value[0] > 21 and value[1] > 21:
@@ -141,6 +162,13 @@ class PlayerBJ(Player):
             return True
         else:
             return False
+
+    def returnCards(self, deck):
+        for x in range(0,len(self.hand)):
+            deck.takeCard(self.hand.pop(0))
+        for x in range(0,len(self.secondHand)):
+            deck.takeCard(self.secondHand.pop(0))
+
     def switchHandsAndBets(self):
         temp = self.hand
         self.hand = self.secondHand
@@ -171,24 +199,7 @@ class DealerBJ(PlayerBJ):
         self.hand   = []
         self.bust = False
         self.name = "Dealer"
-        # if risk is None:
-        #     self.risk = gauss(0.5,0.2);
-        # else:
-        #     self.risk = risk
-    #
-    # def hitMe(self):
-    #     handValue = self.getHandValue()
-    #
-    #     if handValue[0] > 21 or handValue[1] > 21:
-    #         return False
-    #     elif handValue[0] == handValue[1]: # no Aces
-    #         if handValue < 11:
-    #             return True
-    #         elif handValue < 13+2*risk+(2*(random()-.5)):
-    #             return True
-    #         elif handValue < 15+2*risk+(2*(random()-.5)):
-    #             return True
-    #         elif handValue < 17+2*risk+(2*(random()-.5)):
-    #             return True
-    #         else:
-    #             return False
+
+    def returnCards(self, deck):
+        for x in range(0,len(self.hand)):
+            deck.takeCard(self.hand.pop(0))
