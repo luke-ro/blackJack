@@ -20,6 +20,11 @@ class Player:
     def takeCard(self, card):
         self.hand.append(card)
 
+    def returnCards(self, deck):
+        for x in range(0,len(self.hand)):
+            deck.takeCard(self.hand.pop(0))
+
+
     def changeMoney(self,amount):
         self.money+=amount
 
@@ -31,9 +36,12 @@ class Player:
         print()
 
     def showFaceUpCards(self):
+        print("-----------------")
+        print(self.name + " has ", end="", flush=True)
         for i in self.hand:
             if i.getOrientation() == False:
                 print(i.getName() + " ")
+        print()
 
     def getName(self):
         return self.name
@@ -79,8 +87,8 @@ class PlayerBJ(Player):
         total = [0,0]
         for i in self.hand:
             if i.idNum % 13 == 1:
-                total[0] += 1
-                total[1] += 11
+                total[0] += 11
+                total[1] += 1
             elif i.idNum % 13 in [0,11,12]:
                 total[0] += 10
                 total[1] += 10
@@ -110,8 +118,8 @@ class PlayerBJ(Player):
             print(self.name + " has ", end="", flush=True)
             for i in self.hand:
                 print(i.getName(), end=" ", flush=True)
-            print("\nWith a value of " + str(value[0]) + " with Aces low or ")
-            print("With a value of " + str(value[1]) + " with Aces high or ")
+            print("\nWith a value of " + str(value[0]) + " with Aces high or ")
+            print("With a value of " + str(value[1]) + " with Aces low")
 
     # Returns True if the player can double down and doubles down.
     # Returns False if not enough $$$
@@ -141,9 +149,17 @@ class PlayerBJ(Player):
         temp2 = self.bet
         self.bet = self.secondBet
         self.secondBet = temp2
-        
+
     def surrender(self):
         self.money += self.bet/2
+        self.resetBet()
+
+    def wash(self):
+        self.money += self.bet
+        self.resetBet()
+
+    def twoToOne(self):
+        self.money += self.bet*2
         self.resetBet()
 
 class DealerBJ(PlayerBJ):

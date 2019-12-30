@@ -35,17 +35,18 @@ class BlackJack(object):
         print(game.players.getNames())
 
     def getDeckInfo(game):
-        print(game.deck.getDeck())
+        # print(game.deck.getDeck())
         print("-----------------")
         print("There are " + str(game.deck.getSize()) + " cards remaining in the deck")
         for x in game.players:
             x.showHand()
-        game.dealer.showHand()
+        game.dealer.showFaceUpCards()
 
     def play(game):
         for player in game.players:
             game.playTurn(player)
         game.dealerTurn()
+        game.determineWinnings()
 
         # Plays the turn for a sinlge player
     def playTurn(game, player):
@@ -105,21 +106,21 @@ class BlackJack(object):
             # Split
             elif choice == 4:
                 if player.splitHand():
-                    pass
+                    #first hand
+                    print("-_-_-_-_-_-_-_- SPLIT HAND #1 -_-_-_-_-_-_-_-")
+                    game.deck.dealCardFaceUp(player)
+                    game.playTurn(player)
+                    player.switchHandsAndBets()
+                    print("-_-_-_-_-_-_-_- SPLIT HAND #2 -_-_-_-_-_-_-_-")
+                    game.deck.dealCardFaceUp(player)
+                    game.playTurn(player)
+                    print("-_-_-_-_-_-_-_- End of Split hands -_-_-_-_-_-_-_-")
+
+                    print("Ending turn...")
+                    playing = False
                 else:
                     print("Cannot Split. Choose another option.")
-                #first hand
-                print("-_-_-_-_-_-_-_- SPLIT HAND #1 -_-_-_-_-_-_-_-")
-                game.deck.dealCardFaceUp(player)
-                game.playTurn(player)
-                player.switchHandsAndBets()
-                print("-_-_-_-_-_-_-_- SPLIT HAND #2 -_-_-_-_-_-_-_-")
-                game.deck.dealCardFaceUp(player)
-                game.playTurn(player)
-                print("-_-_-_-_-_-_-_- End of Split hands -_-_-_-_-_-_-_-")
 
-                print("Ending turn...")
-                playing = False
             # Surrender
             elif choice == 5:
                 player.surrender()
@@ -130,10 +131,71 @@ class BlackJack(object):
     def dealerTurn(game):
         game.dealer.showHand()
         value = game.dealer.getHandValue()
-        if value[0] == value[1]
-            while value[0] < 17:
-                game.deck.dealCardFaceUp(dealer)
-                game.dealer.showHand()
-                if game.dealer.isBust():
-                    print("The dealer has bust")
-                    game.dealer.bust = True
+        while value[0] < 17 and value[0] == value[1]:
+            game.deck.dealCardFaceUp(game.dealer)
+            game.dealer.showHand()
+            if game.dealer.isBust():
+                print("The dealer has bust")
+                game.dealer.bust = True
+                break
+            value = game.dealer.getHandValue()
+        while value[0] < 17 and not game.dealer.bust:
+            game.deck.dealCardFaceUp(game.dealer)
+            game.dealer.showHand()
+            if game.dealer.isBust():
+                print("The dealer has bust")
+                game.dealer.bust = True
+                break
+            value = game.dealer.getHandValue()
+        while (value[1] < 17 and value[0] != 21) and not game.dealer.bust:
+            game.deck.dealCardFaceUp(game.dealer)
+            game.dealer.showHand()
+            if game.dealer.isBust():
+                print("The dealer has bust")
+                game.dealer.bust = True
+                break
+            value = game.dealer.getHandValue()
+
+    def determineWinnings(game):
+        value = game.dealer.getHandValue()
+        if value[0] == value[1]:
+            if value[0] > 21:
+                dealerValue = -1 # dealer is bust
+            else:
+                dealerValue = value[0]
+        elif value[0] < 22:
+             dealerValue = value[0]
+        elif value[1] < 22:
+            dealerValue = value[1]
+        else:
+            dealerValue = -1
+
+        for x in game.players:
+            value = x.getHandValue()
+            if value[0] == value[1]:
+                if value[0] > 21:
+                    playerValue = -1 # dealer is bust
+                else:
+                    playerValue = value[0]
+            elif value[0] < 22:
+                 playerValue = value[0]
+            elif value[1] < 22:
+                playerValue = value[1]
+            else:
+                playerValue = -1
+
+            if playerValue != -1:
+                if playerValue == dealerValue: #wash
+                    print("wash for " + x.getName())
+                    x.wash()
+                elif playerValue > dealerValue:
+                    print("win for " + x.getName())
+                    x.twoToOne()
+                else:
+                    print("pass for " + x.getName())
+                    pass
+
+    def resetGame(game):
+        for x in game.players:
+            x.returnCards(game.deck)
+        game.dealer.returnCards(game.deck)

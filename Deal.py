@@ -52,6 +52,9 @@ class Deck(object):
     def getSize(self):
         return len(self.myDeck)
 
+    def takeCard(self, card):
+        self.myDeck.append(card)
+
     def __removeCard(self):
         return self.myDeck.pop(0)
 
