@@ -106,7 +106,7 @@ class PlayerBJ(Player):
             - Other cards have the value of their number
         """
         total = [0,0]
-        for i in self.hand:
+        for i in self.secondHand:
             if i.idNum % 13 == 1:
                 total[0] += 11
                 total[1] += 1
@@ -178,20 +178,56 @@ class PlayerBJ(Player):
         self.bet = self.secondBet
         self.secondBet = temp2
 
+    def showHandsAndBets(self):
+        print("The split hands and bets are as follows:")
+        print("First Hand: $" + str(self.bet))
+        value = self.getHandValue()
+        if value[0] == value[1]:
+            print("-----------------")
+            print(self.name + " has ", end="", flush=True)
+            for i in self.hand:
+                print(i.getName(), end=" ", flush=True)
+            print("With a value of " + str(value[0]))
+        else:
+            print("-----------------")
+            print(self.name + " has ", end="", flush=True)
+            for i in self.hand:
+                print(i.getName(), end=" ", flush=True)
+            print("\nWith a value of " + str(value[0]) + " with Aces high or ")
+            print("With a value of " + str(value[1]) + " with Aces low")
+
+        print("Second Hand: $" + str(self.secondBet))
+        value = self.getSecondHandValue()
+        if value[0] == value[1]:
+            print("-----------------")
+            print(self.name + " has ", end="", flush=True)
+            for i in self.secondHand:
+                print(i.getName(), end=" ", flush=True)
+            print("With a value of " + str(value[0]))
+        else:
+            print("-----------------")
+            print(self.name + " has ", end="", flush=True)
+            for i in self.secondHand:
+                print(i.getName(), end=" ", flush=True)
+            print("\nWith a value of " + str(value[0]) + " with Aces high or ")
+            print("With a value of " + str(value[1]) + " with Aces low")
+
+
     def surrender(self):
         self.money += self.bet/2
-        self.resetBet()
+
 
     def wash(self):
         self.money += self.bet
-        self.resetBet()
+
 
     def twoToOne(self):
         self.money += self.bet*2
-        self.resetBet()
+
 
     def newRound(self):
         self.isSplit = False
+        self.resetBet()
 
 class DealerBJ(PlayerBJ):
 
